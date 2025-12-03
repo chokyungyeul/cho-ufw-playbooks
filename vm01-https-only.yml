@@ -3,9 +3,11 @@
   hosts: cho-vm-1
   become: yes
   tasks:
-    - name: Install ufw
+    - name: Install ufw and python3-ufw
       apt:
-        name: ufw
+        name:
+          - ufw
+          - python3-ufw
         state: present
         update_cache: yes
 
