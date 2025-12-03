@@ -1,6 +1,6 @@
 ---
-- name: Policy: SSH Only + Block 8080,8888,80,443,2323
-  hosts: "{{ target_vms }}"
+- name: Policy: SSH + Block Specific Ports
+  hosts: "{{ target_vms | default('all') }}"
   become: yes
   tasks:
     - name: Install ufw
@@ -18,7 +18,7 @@
     - name: Always allow SSH
       command: ufw allow 22/tcp
 
-    - name: Explicitly block specific ports
+    - name: Block specific ports
       command: ufw deny {{ item }}
       loop:
         - 8080/tcp

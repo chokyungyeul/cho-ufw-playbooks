@@ -1,6 +1,6 @@
 ---
-- name: Policy: SSH Only (All else blocked)
-  hosts: "{{ target_vms }}"
+- name: Policy: SSH Only
+  hosts: "{{ target_vms | default('all') }}"
   become: yes
   tasks:
     - name: Install ufw
