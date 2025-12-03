@@ -10,10 +10,11 @@
         update_cache: yes
 
     - name: Reset ufw
-      ufw:
-        state: reset
+      command: ufw --force reset
+      args:
+        warn: false
 
-    - name: Deny all incoming
+    - name: Set default deny
       ufw:
         policy: deny
         direction: incoming
