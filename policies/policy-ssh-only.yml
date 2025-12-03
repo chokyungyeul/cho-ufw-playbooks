@@ -1,6 +1,6 @@
 ---
-- name: Apply SSH Only Policy
-  hosts: "{{ target_vms | default('all') }}"
+- name: Policy: SSH Only (All else blocked)
+  hosts: "{{ target_vms }}"
   become: yes
   tasks:
     - name: Install ufw
@@ -12,10 +12,10 @@
     - name: Reset ufw
       command: ufw --force reset
 
-    - name: Set default deny
+    - name: Default deny incoming
       command: ufw default deny incoming
 
-    - name: Allow SSH
+    - name: Always allow SSH
       command: ufw allow 22/tcp
 
     - name: Enable ufw

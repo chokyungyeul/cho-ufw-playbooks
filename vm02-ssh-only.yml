@@ -1,5 +1,5 @@
 ---
-- name: cho-vm-2 - SSH only
+- name: cho-vm-2 - SSH Only
   hosts: cho-vm-2
   become: yes
   tasks:
@@ -12,10 +12,10 @@
     - name: Reset ufw
       command: ufw --force reset
 
-    - name: Set default deny
+    - name: Default deny incoming
       command: ufw default deny incoming
 
-    - name: Allow SSH
+    - name: Always allow SSH
       command: ufw allow 22/tcp
 
     - name: Enable ufw

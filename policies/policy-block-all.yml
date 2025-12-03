@@ -1,6 +1,6 @@
 ---
-- name: Apply Block All (SSH 유지)
-  hosts: "{{ target_vms | default('all') }}"
+- name: Policy: SSH Only + Block 8080,8888,80,443,2323
+  hosts: "{{ target_vms }}"
   become: yes
   tasks:
     - name: Install ufw
@@ -12,11 +12,20 @@
     - name: Reset ufw
       command: ufw --force reset
 
-    - name: Set default deny
+    - name: Default deny incoming
       command: ufw default deny incoming
 
-    - name: Allow SSH for recovery
+    - name: Always allow SSH
       command: ufw allow 22/tcp
+
+    - name: Explicitly block specific ports
+      command: ufw deny {{ item }}
+      loop:
+        - 8080/tcp
+        - 8888/tcp
+        - 80/tcp
+        - 443/tcp
+        - 2323/tcp
 
     - name: Enable ufw
       command: ufw --force enable

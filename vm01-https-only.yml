@@ -1,5 +1,5 @@
 ---
-- name: cho-vm-1 - HTTPS only
+- name: cho-vm-1 - HTTPS + SSH Only
   hosts: cho-vm-1
   become: yes
   tasks:
@@ -12,8 +12,11 @@
     - name: Reset ufw
       command: ufw --force reset
 
-    - name: Set default deny
+    - name: Default deny incoming
       command: ufw default deny incoming
+
+    - name: Always allow SSH
+      command: ufw allow 22/tcp
 
     - name: Allow HTTPS
       command: ufw allow 443/tcp
