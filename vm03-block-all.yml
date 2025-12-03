@@ -11,8 +11,6 @@
 
     - name: Reset ufw
       command: ufw --force reset
-      args:
-        warn: false
 
     - name: Set default deny
       command: ufw default deny incoming
