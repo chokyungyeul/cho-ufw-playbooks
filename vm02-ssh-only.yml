@@ -1,6 +1,6 @@
 ---
-- name: cho0vm-2 - SSH only
-  hosts: cho0vm-2
+- name: cho-vm-2 - SSH only
+  hosts: cho-vm-2
   become: yes
   tasks:
     - name: Install ufw
