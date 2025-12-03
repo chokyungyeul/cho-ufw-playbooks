@@ -3,9 +3,13 @@
 
 - name: Policy: SSH + Block Specific Ports
 
-  hosts: "{{ target_vms | default('all') }}"
+  hosts: "{{ target_vms }}"
 
   become: yes
+
+  vars:
+
+    target_vms: "{{ target_vms | default('all') }}"
 
   tasks:
 

@@ -1,7 +1,9 @@
 ---
 - name: Policy: SSH + HTTPS Only
-  hosts: "{{ target_vms | default('all') }}"
+  hosts: "{{ target_vms }}"
   become: yes
+  vars:
+    target_vms: "{{ target_vms | default('all') }}"
   tasks:
     - name: Install ufw
       apt:
