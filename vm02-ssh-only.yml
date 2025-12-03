@@ -3,11 +3,9 @@
   hosts: cho-vm-2
   become: yes
   tasks:
-    - name: Install ufw and python3-ufw
+    - name: Install ufw
       apt:
-        name:
-          - ufw
-          - python3-ufw
+        name: ufw
         state: present
         update_cache: yes
 
@@ -17,16 +15,10 @@
         warn: false
 
     - name: Set default deny
-      ufw:
-        policy: deny
-        direction: incoming
+      command: ufw default deny incoming
 
     - name: Allow SSH
-      ufw:
-        rule: allow
-        port: 22
-        proto: tcp
+      command: ufw allow 22/tcp
 
     - name: Enable ufw
-      ufw:
-        state: enabled
+      command: ufw --force enable
