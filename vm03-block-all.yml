@@ -18,12 +18,14 @@
     - name: Always allow SSH
       command: ufw allow 22/tcp
 
+    - name: Always allow http
+      command: ufw allow 80/tcp
+
     - name: Block specific ports
       command: ufw deny {{ item }}
       loop:
         - 8080/tcp
         - 8888/tcp
-        - 80/tcp
         - 443/tcp
         - 2323/tcp
 
