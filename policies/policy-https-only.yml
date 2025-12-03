@@ -1,0 +1,22 @@
+---
+- name: Apply HTTPS Only Policy
+  hosts: "{{ target_vms | default('all') }}"
+  become: yes
+  tasks:
+    - name: Install ufw
+      apt:
+        name: ufw
+        state: present
+        update_cache: yes
+
+    - name: Reset ufw
+      command: ufw --force reset
+
+    - name: Set default deny
+      command: ufw default deny incoming
+
+    - name: Allow HTTPS
+      command: ufw allow 443/tcp
+
+    - name: Enable ufw
+      command: ufw --force enable
