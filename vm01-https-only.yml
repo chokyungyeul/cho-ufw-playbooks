@@ -1,20 +1,29 @@
 ---
-- name: cho-vm-1 - HTTPS only (443)
+- name: cho-vm-1 - HTTPS only
   hosts: cho-vm-1
   become: yes
   tasks:
+    - name: Install ufw
+      apt:
+        name: ufw
+        state: present
+        update_cache: yes
+
     - name: Reset ufw
       ufw:
         state: reset
+
     - name: Deny all incoming
       ufw:
         policy: deny
         direction: incoming
+
     - name: Allow HTTPS
       ufw:
         rule: allow
         port: 443
         proto: tcp
+
     - name: Enable ufw
       ufw:
         state: enabled

@@ -1,20 +1,29 @@
 ---
-- name: cho0vm-2 - SSH only (22)
+- name: cho0vm-2 - SSH only
   hosts: cho0vm-2
   become: yes
   tasks:
+    - name: Install ufw
+      apt:
+        name: ufw
+        state: present
+        update_cache: yes
+
     - name: Reset ufw
       ufw:
         state: reset
+
     - name: Deny all incoming
       ufw:
         policy: deny
         direction: incoming
+
     - name: Allow SSH
       ufw:
         rule: allow
         port: 22
         proto: tcp
+
     - name: Enable ufw
       ufw:
         state: enabled
