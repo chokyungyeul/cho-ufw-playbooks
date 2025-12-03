@@ -1,0 +1,27 @@
+---
+- name: Install Nginx Only
+  hosts: "{{ target_vms }}"
+  become: yes
+  tasks:
+    # 1. Nginx 설치
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    # 2. Nginx 시작 및 부팅 시 자동 실행
+    - name: Start and enable nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    # 3. 기본 웹 페이지 배포 (확인용)
+    - name: Create test HTML
+      copy:
+        content: |
+          <h1>Nginx is running on {{ inventory_hostname }}!</h1>
+          <p>Deployed by AWX!</p>
+        dest: /var/www/html/index.html
+        mode: '0644'
